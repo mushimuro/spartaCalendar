@@ -43,7 +43,7 @@ public class CalendarController {
 
     // 선택 조회
     @GetMapping("/calendars/{pwd}")
-    public Calendar getCalendars(@PathVariable Long pwd, @RequestBody CalendarRequestDto requestDto){
+    public Calendar getCalendars(@PathVariable Long pwd){
         if(calendarList.containsKey(pwd)){
             return calendarList.get(pwd);
         }else{
@@ -61,6 +61,17 @@ public class CalendarController {
 
             calendar.update(requestDto);
             return calendarList.get(pwd);
+        } else{
+            throw new IllegalArgumentException("chosen calendar does not exist");
+        }
+    }
+
+    // 삭제
+    @DeleteMapping("/calendars/{pwd}")
+    public Long deleteCalendar(@PathVariable Long pwd){
+        if(calendarList.containsKey(pwd)){
+            calendarList.remove(pwd);
+            return pwd;
         } else{
             throw new IllegalArgumentException("chosen calendar does not exist");
         }
