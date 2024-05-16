@@ -42,7 +42,7 @@ public class CalendarController {
     }
 
     // 선택 조회
-    @GetMapping("/calendars/{id}")
+    @GetMapping("/calendars/{pwd}")
     public Calendar getCalendars(@PathVariable Long pwd, @RequestBody CalendarRequestDto requestDto){
         if(calendarList.containsKey(pwd)){
             return calendarList.get(pwd);
@@ -54,7 +54,7 @@ public class CalendarController {
     // 수정
     //선택한 일정의 할일 제목, 할일 내용, 담당자을 수정할 수 있습니다.
     // 수정된 일정의 정보를 반환 받아 확인할 수 있습니다.
-    @PutMapping("/calendars/{id}")
+    @PutMapping("/calendars/{pwd}")
     public Calendar updateCalendar(@PathVariable Long pwd, @RequestBody CalendarRequestDto requestDto){
         if(calendarList.containsKey(pwd)){
             Calendar calendar = calendarList.get(pwd);
