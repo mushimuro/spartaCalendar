@@ -10,18 +10,22 @@ import lombok.Setter;
 @NoArgsConstructor
 public class Calendar {
 
-    private Long id;
+    private Long pwd;
     private String title;
     private String content;
     private String person;
-    private String pwd;
     private int date;
 
     public Calendar(CalendarRequestDto requestDto) {
         this.title = requestDto.getTitle();
         this.content = requestDto.getContent();
         this.person = requestDto.getPerson();
-        this.pwd = requestDto.getPwd();
         this.date = requestDto.getDate();
+    }
+
+    public void update(CalendarRequestDto requestDto) {
+        this.title = requestDto.getTitle();
+        this.content = requestDto.getContent();
+        this.person = requestDto.getPerson();
     }
 }
