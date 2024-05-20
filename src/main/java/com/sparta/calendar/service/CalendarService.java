@@ -4,6 +4,7 @@ import com.sparta.calendar.dto.CalendarRequestDto;
 import com.sparta.calendar.repository.Calendar;
 import com.sparta.calendar.repository.CalendarRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -27,6 +28,6 @@ public class CalendarService {
 
     // get all
     public List<Calendar> getAllCalendars(){
-        return calendarRepository.findAll();
+        return calendarRepository.findAll(Sort.by("createdAt").descending());
     }
 }
