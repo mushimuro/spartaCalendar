@@ -9,6 +9,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api")
 @AllArgsConstructor
@@ -22,6 +24,20 @@ public class CalendarController {
         CalendarResponseDto response = new CalendarResponseDto(calendar);
 //        return ResponseEntity.ok().build();
         return ResponseEntity.ok().body(response);
+    }
+
+    @GetMapping("/calendars/{calendarId}")
+    public ResponseEntity<CalendarResponseDto> getCalendars(@PathVariable Long calendarId){
+        Calendar calendar = calendarService.getCalendar(calendarId);
+        CalendarResponseDto response = new CalendarResponseDto(calendar);
+        return ResponseEntity.ok().body(response);
+    }
+
+    @GetMapping("/calendars")
+    public ResponseEntity<List<CalendarResponseDto>> getAllCalendars(){
+        List<Calendar> calendarList = calendarService.getAllCalendars();
+        List<CalendarResponseDto> responseList = calendarList.stream().map(CalendarResponseDto::new).toList();
+        return ResponseEntity.ok().body(responseList);
     }
 
 
