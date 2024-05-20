@@ -1,44 +1,80 @@
 package com.sparta.calendar.controller;
 
+import com.sparta.calendar.CommonResponse;
 import com.sparta.calendar.dto.CalendarRequestDto;
 import com.sparta.calendar.dto.CalendarResponseDto;
 import com.sparta.calendar.repository.Calendar;
 import com.sparta.calendar.service.CalendarService;
 import jakarta.persistence.GeneratedValue;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/calendars")
 @AllArgsConstructor
 public class CalendarController {
 
     public final CalendarService calendarService;
 
-    @PostMapping("/calendars")
-    public ResponseEntity<CalendarResponseDto> postCalendar(@RequestBody CalendarRequestDto dto){
+    @PostMapping
+    public ResponseEntity<CommonResponse<CalendarResponseDto>> postCalendar(@RequestBody CalendarRequestDto dto) {
         Calendar calendar = calendarService.createCalendar(dto);
         CalendarResponseDto response = new CalendarResponseDto(calendar);
 //        return ResponseEntity.ok().build();
-        return ResponseEntity.ok().body(response);
+        return ResponseEntity.ok().body(CommonResponse.<CalendarResponseDto>builder()
+                .statusCode(HttpStatus.OK.value())
+                .msg("creation complete")
+                .data(response)
+                .build());
     }
 
-    @GetMapping("/calendars/{calendarId}")
-    public ResponseEntity<CalendarResponseDto> getCalendars(@PathVariable Long calendarId){
+    @GetMapping("/{calendarId}")
+    public ResponseEntity<CommonResponse<CalendarResponseDto>> getCalendars(@PathVariable Long calendarId) {
         Calendar calendar = calendarService.getCalendar(calendarId);
         CalendarResponseDto response = new CalendarResponseDto(calendar);
-        return ResponseEntity.ok().body(response);
+        return ResponseEntity.ok().body(CommonResponse.<CalendarResponseDto>builder()
+                .statusCode(HttpStatus.OK.value())
+                .msg("search complete")
+                .data(response)
+                .build());
     }
 
-    @GetMapping("/calendars")
-    public ResponseEntity<List<CalendarResponseDto>> getAllCalendars(){
+    @GetMapping
+    public ResponseEntity<CommonResponse<List<CalendarResponseDto>>> getAllCalendars() {
         List<Calendar> calendarList = calendarService.getAllCalendars();
-        List<CalendarResponseDto> responseList = calendarList.stream().map(CalendarResponseDto::new).toList();
-        return ResponseEntity.ok().body(responseList);
+        List<CalendarResponseDto> response = calendarList.stream().map(CalendarResponseDto::new).toList();
+        return ResponseEntity.ok().body(CommonResponse.<List<CalendarResponseDto>>builder()
+                .statusCode(HttpStatus.OK.value())
+                .msg("search all complete")
+                .data(response)
+                .build());
     }
+
+    @PutMapping("/{calendarId}")
+    public ResponseEntity<CommonResponse<CalendarResponseDto>> putCalendar(@PathVariable Long calendarId, @RequestBody CalendarRequestDto dto) {
+        Calendar calendar = calendarService.updateCalendar(calendarId, dto);
+        CalendarResponseDto response = new CalendarResponseDto(calendar);
+        return ResponseEntity.ok().body(CommonResponse.<CalendarResponseDto>builder()
+                .statusCode(HttpStatus.OK.value())
+                .msg("edit complete")
+                .data(response)
+                .build());
+    }
+
+    @DeleteMapping("/{calendarId}")
+    public ResponseEntity<CommonResponse> deleteCalendar(@PathVariable Long calendarId, @RequestBody CalendarRequestDto dto) {
+        calendarService.deleteCalendar(calendarId, dto.getPwd());
+        return ResponseEntity.ok().body(CommonResponse.builder()
+                .statusCode(HttpStatus.OK.value())
+                .msg("delete complete")
+                .build());
+    }
+}
+
 
 
     // 여기에서 pwd 를 받는다는게 id 자리에 아이디 대신 비번이 들어가는것?
@@ -103,4 +139,4 @@ public class CalendarController {
 //            throw new IllegalArgumentException("chosen calendar does not exist");
 //        }
 //    }
-}
+//}

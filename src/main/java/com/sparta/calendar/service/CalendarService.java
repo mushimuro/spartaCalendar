@@ -30,4 +30,30 @@ public class CalendarService {
     public List<Calendar> getAllCalendars(){
         return calendarRepository.findAll(Sort.by("createdAt").descending());
     }
+
+    // put
+    public Calendar updateCalendar(Long calendarId, CalendarRequestDto dto){
+        Calendar calendar = getCalendar(calendarId);
+
+        // pwd check
+        if(calendar.getPwd() != null && !calendar.getPwd().equals(dto.getPwd())){
+            throw new IllegalArgumentException();
+        }
+
+        calendar.setTitle(dto.getTitle());
+        calendar.setContent(dto.getContent());
+        calendar.setUserName(dto.getUserName());
+
+        return calendarRepository.save(calendar);
+    }
+
+    public void deleteCalendar(Long calendarId, String pwd){
+        Calendar calendar = getCalendar(calendarId);
+        // pwd check
+        if(calendar.getPwd() != null && !calendar.getPwd().equals(pwd)){
+            throw new IllegalArgumentException();
+        }
+
+        calendarRepository.deleteById(calendarId);
+    }
 }
