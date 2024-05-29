@@ -19,11 +19,11 @@ public class CalendarController {
 
     public final CalendarService calendarService;
 
+    // 일정 등록
     @PostMapping
     public ResponseEntity<CommonResponse<CalendarResponseDto>> postCalendar(@RequestBody CalendarRequestDto dto) {
         Calendar calendar = calendarService.createCalendar(dto);
         CalendarResponseDto response = new CalendarResponseDto(calendar);
-//        return ResponseEntity.ok().build();
         return ResponseEntity.ok().body(CommonResponse.<CalendarResponseDto>builder()
                 .statusCode(HttpStatus.OK.value())
                 .msg("creation complete")
@@ -31,6 +31,7 @@ public class CalendarController {
                 .build());
     }
 
+    // 선택 일정 조회
     @GetMapping("/{calendarId}")
     public ResponseEntity<CommonResponse<CalendarResponseDto>> getCalendars(@PathVariable Long calendarId) {
         Calendar calendar = calendarService.getCalendar(calendarId);
@@ -42,6 +43,7 @@ public class CalendarController {
                 .build());
     }
 
+    // 전체 일정 조회
     @GetMapping
     public ResponseEntity<CommonResponse<List<CalendarResponseDto>>> getAllCalendars() {
         List<Calendar> calendarList = calendarService.getAllCalendars();
@@ -53,6 +55,7 @@ public class CalendarController {
                 .build());
     }
 
+    // 일정 수정
     @PutMapping("/{calendarId}")
     public ResponseEntity<CommonResponse<CalendarResponseDto>> putCalendar(@PathVariable Long calendarId, @RequestBody CalendarRequestDto dto) {
         Calendar calendar = calendarService.updateCalendar(calendarId, dto);
@@ -64,6 +67,7 @@ public class CalendarController {
                 .build());
     }
 
+    // 일정 삭제
     @DeleteMapping("/{calendarId}")
     public ResponseEntity<CommonResponse> deleteCalendar(@PathVariable Long calendarId, @RequestBody CalendarRequestDto dto) {
         calendarService.deleteCalendar(calendarId, dto.getPwd());
