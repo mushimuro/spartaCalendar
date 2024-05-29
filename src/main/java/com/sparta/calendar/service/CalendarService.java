@@ -1,7 +1,7 @@
 package com.sparta.calendar.service;
 
 import com.sparta.calendar.dto.CalendarRequestDto;
-import com.sparta.calendar.repository.Calendar;
+import com.sparta.calendar.entity.Calendar;
 import com.sparta.calendar.repository.CalendarRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Sort;

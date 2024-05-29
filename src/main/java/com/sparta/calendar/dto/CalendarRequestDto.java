@@ -1,6 +1,6 @@
 package com.sparta.calendar.dto;
 
-import com.sparta.calendar.repository.Calendar;
+import com.sparta.calendar.entity.Calendar;
 import lombok.Getter;
 import lombok.Setter;
 

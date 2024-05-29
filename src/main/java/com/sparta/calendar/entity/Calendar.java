@@ -1,15 +1,20 @@
-package com.sparta.calendar.repository;
+package com.sparta.calendar.entity;
 
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
+@Setter
 @Entity
 @NoArgsConstructor
+@Table(name = "calendar")
 public class Calendar {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -21,6 +26,10 @@ public class Calendar {
     private String userName;
     private String pwd;
     private LocalDateTime createdAt;
+
+    @OneToMany
+    @JoinColumn(name = "comment_id")
+    private List<Comment> commentList = new ArrayList<>();
 
     @Builder
     public Calendar(String title, String content, String userName, String pwd) {
