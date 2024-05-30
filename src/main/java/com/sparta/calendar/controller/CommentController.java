@@ -1,11 +1,8 @@
 package com.sparta.calendar.controller;
 
 import com.sparta.calendar.CommonResponse;
-import com.sparta.calendar.dto.CalendarRequestDto;
-import com.sparta.calendar.dto.CalendarResponseDto;
 import com.sparta.calendar.dto.CommentRequestDto;
 import com.sparta.calendar.dto.CommentResponseDto;
-import com.sparta.calendar.entity.Calendar;
 import com.sparta.calendar.entity.Comment;
 import com.sparta.calendar.service.CommentService;
 import lombok.AllArgsConstructor;
