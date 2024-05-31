@@ -39,22 +39,4 @@ public class UserController {
                 .msg("signup complete")
                 .build());
     }
-
-//    @ResponseBody
-//    @PostMapping("/user/login")
-//    public String login1(@RequestBody LoginRequestDto loginRequestDto, HttpServletResponse res) {
-//        userService.login(loginRequestDto, res);
-//        return "logged in";
-//    }
-
-    //로그인 구현
-    @ResponseBody
-    @PostMapping("/user/login")
-    public ResponseEntity<CommonResponse<UserResponseDto>> login(@RequestBody LoginRequestDto loginRequestDto, HttpServletResponse response) {
-        userService.login(loginRequestDto, response);
-        return ResponseEntity.ok().body(CommonResponse.<UserResponseDto>builder()
-                .statusCode(HttpStatus.OK.value())
-                .msg("login complete")
-                .build());
-    }
 }
