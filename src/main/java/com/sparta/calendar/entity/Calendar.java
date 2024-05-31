@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Getter
-@Setter
 @Entity
 @NoArgsConstructor
 @Table(name = "calendar")
@@ -23,19 +22,22 @@ public class Calendar {
 
     private String title;
     private String content;
-    private String userName;
+//    private String userName;
     private String pwd;
     private LocalDateTime createdAt;
 
-    @OneToMany
-    @JoinColumn(name = "comment_id")
+    @OneToMany(mappedBy = "calendar")
     private List<Comment> commentList = new ArrayList<>();
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @Builder
     public Calendar(String title, String content, String userName, String pwd) {
         this.title = title;
         this.content = content;
-        this.userName = userName;
+//        this.userName = userName;
         this.pwd = pwd;
         this.createdAt = LocalDateTime.now();
     }
@@ -48,7 +50,7 @@ public class Calendar {
         this.content = content;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
+//    public void setUserName(String userName) {
+//        this.userName = userName;
+//    }
 }

@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -32,6 +34,12 @@ public class User {
     private UserRoleEnum role;
 
     private LocalDateTime createdAt;
+
+    @OneToMany(mappedBy = "user")
+    private List<Comment> commentList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user")
+    private List<Calendar> calendarList = new ArrayList<>();
 
     public User(String username, String password, String nickname, UserRoleEnum role) {
         this.username = username;

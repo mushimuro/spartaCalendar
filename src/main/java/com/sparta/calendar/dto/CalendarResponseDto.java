@@ -19,7 +19,7 @@ public class CalendarResponseDto {
         this.calendarId = calendar.getId();
         this.title = calendar.getTitle();
         this.content = calendar.getContent();
-        this.userName = calendar.getUserName();
+//        this.userName = calendar.getUserName();
         this.createdAt = calendar.getCreatedAt();
     }
 }

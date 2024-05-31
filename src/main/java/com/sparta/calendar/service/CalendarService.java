@@ -42,7 +42,7 @@ public class CalendarService {
 
         calendar.setTitle(dto.getTitle());
         calendar.setContent(dto.getContent());
-        calendar.setUserName(dto.getUserName());
+//        calendar.setUserName(dto.getUserName());
 
         return calendarRepository.save(calendar);
     }
