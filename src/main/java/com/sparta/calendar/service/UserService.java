@@ -39,6 +39,7 @@ public class UserService {
     public User signup(SignupRequestDto requestDto) {
         String username = requestDto.getUsername();
         String password = passwordEncoder.encode(requestDto.getPassword());
+//        String password = requestDto.getPassword();
         String nickname = requestDto.getNickname();
 //        UserRoleEnum role = UserRoleEnum.USER;
 

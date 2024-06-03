@@ -1,10 +1,12 @@
 package com.sparta.calendar.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.validator.constraints.Length;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -20,10 +22,18 @@ public class Calendar {
     @Column(name = "calendar_id", nullable = false)
     private Long id;
 
+    @Column
+    @Length(max = 200)
+    @NotBlank
     private String title;
+
+    @Column
     private String content;
 //    private String userName;
+    @Column(length = 100, nullable = false)
+    @NotBlank
     private String pwd;
+
     private LocalDateTime createdAt;
 
     @OneToMany(mappedBy = "calendar")

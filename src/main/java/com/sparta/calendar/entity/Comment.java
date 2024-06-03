@@ -1,6 +1,7 @@
 package com.sparta.calendar.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,6 +17,8 @@ public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @NotBlank(message = "공백이거나 null인 것은 불가합니다.")
     private String commentContent;
     private LocalDateTime createdAt;
 //    private Long userId;
