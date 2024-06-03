@@ -9,14 +9,13 @@ import lombok.Setter;
 public class CalendarRequestDto {
     private String title;
     private String content;
-    private String userName;
+    private String username;
     private String pwd;
 
     public Calendar toEntity(){
         return Calendar.builder()
                 .title(title)
                 .content(content)
-                .userName(userName)
                 .pwd(pwd)
                 .build();
     }

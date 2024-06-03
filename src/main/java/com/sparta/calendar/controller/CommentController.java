@@ -11,7 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/calendars")
+@RequestMapping("/api")
 @AllArgsConstructor
 public class CommentController {
 
@@ -32,6 +32,9 @@ public class CommentController {
     // 댓글 조회
     @GetMapping("/comments/{commentId}")
     public ResponseEntity<CommonResponse<CommentResponseDto>> getComments(@PathVariable Long commentId) {
+         if(commentId == null) {
+             throw new NullPointerException("commentId is null");
+         }
         Comment comment = commentService.getComment(commentId);
         CommentResponseDto response = new CommentResponseDto(comment);
         return ResponseEntity.ok().body(CommonResponse.<CommentResponseDto>builder()
@@ -44,6 +47,10 @@ public class CommentController {
     // 댓글 수정
     @PutMapping("/comments/{commentId}")
     public ResponseEntity<CommonResponse<CommentResponseDto>> putCalendar(@PathVariable Long commentId, @RequestBody CommentRequestDto dto) {
+        if(commentId == null) {
+            throw new NullPointerException("commentId is null");
+        }
+
         Comment comment = commentService.updateComment(commentId, dto);
         CommentResponseDto response = new CommentResponseDto(comment);
         return ResponseEntity.ok().body(CommonResponse.<CommentResponseDto>builder()
@@ -56,6 +63,9 @@ public class CommentController {
     // 댓글 삭제
     @DeleteMapping("/comments/{commentId}")
     public ResponseEntity<CommonResponse> deleteComment(@PathVariable Long commentId, @RequestBody CommentRequestDto dto) {
+        if(commentId == null) {
+            throw new NullPointerException("commentId is null");
+        }
         commentService.deleteComment(commentId);
         return ResponseEntity.ok().body(CommonResponse.builder()
                 .statusCode(HttpStatus.OK.value())

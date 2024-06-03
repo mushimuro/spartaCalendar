@@ -1,6 +1,7 @@
 package com.sparta.calendar.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Pattern;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,10 +22,15 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Length(min=4, max=10)
+
+    @Length(min=4, max=10, message="id는 4~10자 사이입니다.")
+    @Pattern(regexp = "[a-z0-9]*$",message = "아이디 형식이 일치하지 않습니다.")
     @Column(nullable = false, unique = true)
     private String username;
 
+    @Length(min = 8, max = 15, message="비밀번호는 8~15자 사이입니다.")
+    @Pattern(regexp = "[a-zA-Z0-9]*$",message = "비밀번호 형식이 일치하지 않습니다.")
+    // 비밀번호가 암호화 되면서 위 두 조건을 만족 못한다. 따라서 계속 오류가 발생한다.
     @Column(nullable = false)
     private String password;
 

@@ -1,17 +1,15 @@
 package com.sparta.calendar.service;
 
 
-import com.sparta.calendar.dto.LoginRequestDto;
 import com.sparta.calendar.dto.SignupRequestDto;
 import com.sparta.calendar.entity.User;
 import com.sparta.calendar.entity.UserRoleEnum;
 import com.sparta.calendar.jwt.JwtUtil;
 import com.sparta.calendar.repository.UserRepository;
-import jakarta.servlet.http.HttpServletResponse;
-import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -61,5 +59,13 @@ public class UserService {
         // 사용자 등록
         User user = new User(username, password, nickname, role);
         return userRepository.save(user);
+    }
+
+    public User login(String username, String password) {
+        User user = userRepository.findByUsername(username).orElseThrow(IllegalArgumentException::new);
+        if (user == null || !Objects.equals(user.getPassword(), password)) {
+            throw new IllegalArgumentException("유효하지 않은 사용자 이름 혹은 잘못된 비밀번호");
+        }
+        return user;
     }
 }

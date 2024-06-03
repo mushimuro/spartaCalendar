@@ -5,7 +5,6 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
 
 import java.time.LocalDateTime;
@@ -29,8 +28,12 @@ public class Calendar {
 
     @Column
     private String content;
-//    private String userName;
-    @Column(length = 100, nullable = false)
+
+    @NotBlank
+    @Column(length = 100)
+    private String username;
+
+    @Column(nullable = false)
     @NotBlank
     private String pwd;
 
@@ -44,10 +47,11 @@ public class Calendar {
     private User user;
 
     @Builder
-    public Calendar(String title, String content, String userName, String pwd) {
+    public Calendar(String title, String content, String pwd, String username, User user) {
+        this.user = user;
         this.title = title;
         this.content = content;
-//        this.userName = userName;
+        this.username = username;
         this.pwd = pwd;
         this.createdAt = LocalDateTime.now();
     }
@@ -59,8 +63,4 @@ public class Calendar {
     public void setContent(String content) {
         this.content = content;
     }
-
-//    public void setUserName(String userName) {
-//        this.userName = userName;
-//    }
 }

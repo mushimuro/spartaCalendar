@@ -35,6 +35,9 @@ public class CalendarController {
     // 선택 일정 조회
     @GetMapping("/{calendarId}")
     public ResponseEntity<CommonResponse<CalendarResponseDto>> getCalendars(@PathVariable Long calendarId) {
+        if(calendarId == null) {
+            throw new NullPointerException("calendarId is null");
+        }
         Calendar calendar = calendarService.getCalendar(calendarId);
         CalendarResponseDto response = new CalendarResponseDto(calendar);
         return ResponseEntity.ok().body(CommonResponse.<CalendarResponseDto>builder()
@@ -59,6 +62,9 @@ public class CalendarController {
     // 일정 수정
     @PutMapping("/{calendarId}")
     public ResponseEntity<CommonResponse<CalendarResponseDto>> putCalendar(@PathVariable Long calendarId, @RequestBody CalendarRequestDto dto) {
+        if(calendarId == null) {
+            throw new NullPointerException("calendarId is null");
+        }
         Calendar calendar = calendarService.updateCalendar(calendarId, dto);
         CalendarResponseDto response = new CalendarResponseDto(calendar);
         return ResponseEntity.ok().body(CommonResponse.<CalendarResponseDto>builder()
@@ -71,6 +77,9 @@ public class CalendarController {
     // 일정 삭제
     @DeleteMapping("/{calendarId}")
     public ResponseEntity<CommonResponse> deleteCalendar(@PathVariable Long calendarId, @RequestBody CalendarRequestDto dto) {
+        if(calendarId == null) {
+            throw new NullPointerException("calendarId is null");
+        }
         calendarService.deleteCalendar(calendarId, dto.getPwd());
         return ResponseEntity.ok().body(CommonResponse.builder()
                 .statusCode(HttpStatus.OK.value())

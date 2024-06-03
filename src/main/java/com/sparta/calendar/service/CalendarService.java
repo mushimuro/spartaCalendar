@@ -2,7 +2,10 @@ package com.sparta.calendar.service;
 
 import com.sparta.calendar.dto.CalendarRequestDto;
 import com.sparta.calendar.entity.Calendar;
+import com.sparta.calendar.entity.Comment;
+import com.sparta.calendar.entity.User;
 import com.sparta.calendar.repository.CalendarRepository;
+import com.sparta.calendar.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -13,11 +16,18 @@ import java.util.List;
 @AllArgsConstructor
 public class CalendarService {
     private final CalendarRepository calendarRepository;
+    private final UserRepository userRepository;
 
     // post
     public Calendar createCalendar(CalendarRequestDto dto){
-        var newCalendar = dto.toEntity();
-        return calendarRepository.save(newCalendar);
+        User user = userRepository.findByUsername(dto.getUsername()).orElseThrow(NullPointerException::new);
+        System.out.println(dto.getUsername());
+        Calendar calendar = new Calendar(dto.getTitle(), dto.getContent(), dto.getUsername(), dto.getPwd(), user);
+        System.out.println("일정 생성");
+        user.getCalendarList().add(calendar);
+        System.out.println("유저의 리스트에 저장");
+
+        return calendarRepository.save(calendar);   // 여기에서 문제 발생
     }
 
     // get one calendar

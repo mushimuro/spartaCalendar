@@ -5,7 +5,6 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import java.time.LocalDateTime;
 
@@ -21,7 +20,10 @@ public class Comment {
     @NotBlank(message = "공백이거나 null인 것은 불가합니다.")
     private String commentContent;
     private LocalDateTime createdAt;
-//    private Long userId;
+
+    @NotBlank
+    @Column(length = 100)
+    private String username;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -32,9 +34,11 @@ public class Comment {
     private Calendar calendar;
 
     @Builder
-    public Comment(String commentContent, Long userId) {
+    public Comment(String commentContent, String username, Calendar calendar, User user) {
+        this.user = user;
+        this.calendar = calendar;
         this.commentContent = commentContent;
-//        this.userId = userId;
+        this.username = username;
         this.createdAt = LocalDateTime.now();
     }
 
